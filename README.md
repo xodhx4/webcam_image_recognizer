@@ -2,6 +2,16 @@
 
 [TOC]
 
+## Pre-requirement
+
+```shell
+pip install opencv-contrib-python
+pip install opencv-python
+pip install fire
+```
+
+
+
 ## 1. Video Recording
 
 ### parameter
@@ -24,6 +34,7 @@ ctrl + z
 
 - -l, --label : The label name
   - It will make a new folder with that name, and save the all the frame image  
+- -a, --augumentation : Y/N
 
 ### How to use
 
@@ -55,5 +66,10 @@ ctrl + z
 
 [] The training parameter record, tensorboard
 
+[] Docker
 
+## Reference
 
+- How to install opencv on window and test
+  - https://www.codingforentrepreneurs.com/blog/install-opencv-3-for-python-on-windows/
+  - https://www.codingforentrepreneurs.com/blog/opencv-python-web-camera-quick-test/
