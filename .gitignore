@@ -117,3 +117,6 @@ dmypy.json
 
 # Mine
 /record
+/train
+/result
+codealike.json

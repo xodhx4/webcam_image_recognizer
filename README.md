@@ -5,7 +5,6 @@
 ## Pre-requirement
 
 ```shell
-pip install opencv-contrib-python
 pip install opencv-python
 pip install fire
 ```
@@ -68,8 +67,19 @@ ctrl + z
 
 [] Docker
 
+[] 2 augument
+
+[] pretrained model
+
+[] test accuracy add
+
+[] inference
+
 ## Reference
 
 - How to install opencv on window and test
   - https://www.codingforentrepreneurs.com/blog/install-opencv-3-for-python-on-windows/
   - https://www.codingforentrepreneurs.com/blog/opencv-python-web-camera-quick-test/
+- conda install -c conda-forge keras may make error
+  - window pip install tensorflow=1.5
+  - pip install pillow

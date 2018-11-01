@@ -1,15 +1,13 @@
-import numpy as np
 import os
 import cv2
 import fire
 from datetime import datetime
+from util import makepath
 
 class Recoder(object):
     def __init__(self, path=os.path.join(os.getcwd(), "record")):
         self.path = path
-        if not os.path.exists(path):
-            os.mkdir(path)
-            print(f"Make folder :  {path}")
+        makepath(self.path)
 
     def record(self):
         cap = cv2.VideoCapture(0)
@@ -17,7 +15,7 @@ class Recoder(object):
         # Define the codec and create VideoWriter object
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         name = os.path.join(self.path, f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.avi")
-        out = cv2.VideoWriter(name,fourcc, 20.0, (640,480))
+        out = cv2.VideoWriter(name,fourcc, 30.0, (640,480))
 
         while(cap.isOpened()):
             ret, frame = cap.read()
