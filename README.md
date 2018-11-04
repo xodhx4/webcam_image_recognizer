@@ -10,6 +10,7 @@ pip install fire
 pip install tensorflow=1.5
 pip install keras
 pip install pillow
+pip install pyfiglet
 ```
 
 Or you could easily build environment using `conda` with `env.yml` file
@@ -24,57 +25,113 @@ After that, activate environment using `activate wb-02`
 
 It is only tested on window10
 
+## How to use
 
+### Interactive mode
 
-## 1. Video Recording
+You could easily use by interactive shell
 
-### parameter
+just `python interactive.py`
 
-- -p, --path: The path where save the video
+![1541339909634](assets/1541339909634.png)
 
-### How to stop
+### file call
+
+You could call exact function you want by python file
+
+**BUT READ detailed document in python file to USE**
+
+So I recommend to use Interactive mode.
+
+## Function explain
+
+Detail explain is in python file. This is simple explain
+
+### 1. Video Recording
+
+#### parameter
+
+##### Optional
+
+- --path: The path where save the video
+
+#### How to stop
 
 Press 'q'
 
-### How to pause
+#### How to pause
 
 press 's'
 
 
 
-## 2. Labeling the video frame
+### 2. Labeling the video frame
 
-### parameter
+#### parameter
 
-- -l, --label : The label name
+- --label : The label name
   - It will make a new folder with that name, and save the all the frame image  
-- -a, --augumentation : Y/N
+- --videoname  :  The name of video
 
-### How to use
+#### How to use
 
-- Start duration and end duration by key
+There exist 2 mode seperately
+
+- 'playmode' : Automatically play the video. If not, you could pass frame by press any key except reserved key.
+
+- 'capturemode' : Save frame that shown in monitor. So this should be turn on when object you what to train is on frame.
+
+You could watch which mode you are at video left top.
+
+The default mode is not playmode, not capturemode.
+
+- RESERVED KEY:
+
+​            'q' : stop labeling
+
+​            's' : change playmode
+
+​            'c' : change capturemode
+
+​            ':{number}f' : You could pass the frame you want.
+
+​                For example, if you press ':500f', then it will pass 500 frames.
 
 
 
-## 3. Train model
+### 3. Train model
 
-### Parameter
+Make CNN model with your dataset
 
-- -m, --model : You could choose which pretrained model to use. You could choose it by considering your computer. Or you could write a path what saved model
-- -n, --num : how much layer will be trained
-- -s, --save : save path
-- -l, --label :  The path where train
+**It is recommended to use pretrained model**
 
-## 4. Inference
+#### Parameter
 
-### Parameter
+##### Optional
 
-- -m, --model : Choose model to Inference
-- -s, --save : Will you save picture or just json
+- --pretrained : y|n
+  - The pretrained model is MobileNetv2
+- --path : Dataset path
+- --BN : True|False
+  - Wheter use batch normalization
+- --epoch : Number of epoch
 
-## 5. Analysis
+### 4. Inference
+
+Inference real time video from webcam
+
+#### Parameter
+
+- --model : Name of model to use
+
+##### Optional
+
+- --path : path for save result
+
+### 5. Analysis
 
 - shap
+- Not supported now
 
 ## TODO
 
