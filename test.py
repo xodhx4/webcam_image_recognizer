@@ -1,3 +1,5 @@
+"""Test Webcam with simple code
+"""
 import cv2
 
 cap = cv2.VideoCapture(0)
