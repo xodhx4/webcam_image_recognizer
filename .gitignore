@@ -116,7 +116,8 @@ dmypy.json
 .vscode/*
 
 # Mine
-/record
-/train
-/result
+record/*
+train/*
+result/*
+model/*
 codealike.json

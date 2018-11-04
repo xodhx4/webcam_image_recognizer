@@ -23,6 +23,11 @@ class Trainer(object):
             fullpath = os.path.join(self.path, folder)
             if os.path.isdir(fullpath):
                 self.labellist.append(folder)
+
+    def _save_label(self, model_name):
+        label = ",".join(self.labellist)
+        with open(f"{model_name}.txt", "w") as f:
+            f.write(label)
     
     def new_model(self):
         from keras.models import Sequential
@@ -83,7 +88,9 @@ class Trainer(object):
                 epochs=epoch
             )
             makepath('./model')
-            model.save(f"./model/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.h5")
+            model_name = f"./model/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.h5"
+            model.save(model_name)
+            self._save_label(model_name)
 
 
 if __name__=='__main__':
