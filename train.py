@@ -4,6 +4,7 @@ Make your CNN model with your dataset.
 This automatically load dataset from directory './train/'.
 This model is multi class classification and each folder would be onde class with dir name.
 And this automatically augument the dataset with shift, flip, etc.
+*Pretrained model is recommended
 
 USAGE :
     python train.py train [--pretrained y|n] [--path DATASET_PATH] [--block NUM_BLOCK]
@@ -20,7 +21,7 @@ from util import makepath
 
 
 class Trainer(object):
-    def __init__(self, pretrained="n", path=os.path.join(os.getcwd(), "train"), block=3, BN=True):
+    def __init__(self, pretrained="y", path=os.path.join(os.getcwd(), "train"), block=3, BN=True):
         """Init option - pretrained, path, block
 
         Args:
@@ -99,7 +100,31 @@ class Trainer(object):
         model.summary()
         return model
 
-    def _data_generator(self):
+    def pretrained_model(self):
+        from keras.applications.mobilenet_v2 import MobileNetV2
+        from keras.layers import Dense
+        from keras.models import Model
+
+        trained_model = MobileNetV2()
+        trained_model.layers.pop()
+
+        added = trained_model.layers[-1].output
+        added = Dense(128, activation='relu')(added)
+        pred = Dense(len(self.labellist), activation='softmax')(added)
+
+        model = Model(input=trained_model.input, output=pred)
+
+        for layer in trained_model.layers:
+            layer.trainable = False
+
+        model.compile(loss='categorical_crossentropy',
+                      optimizer='rmsprop',
+                      metrics=['accuracy'])
+
+        model.summary()
+        return model
+
+    def _data_generator(self, size=64):
         """Load image from dir, and make augemented dataset
         """
         from keras.preprocessing.image import ImageDataGenerator
@@ -114,7 +139,7 @@ class Trainer(object):
 
         train_generator = train_data.flow_from_directory(
             directory=self.path,
-            target_size=(64, 64)
+            target_size=(size, size)
         )
         return train_generator
 
@@ -123,25 +148,33 @@ class Trainer(object):
             epoch (int, optional): Defaults to 10. Number of epochs
         """
         from keras.callbacks import ModelCheckpoint, EarlyStopping
+        model_name = f"./model/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.h5"
+
+        checkpoint = ModelCheckpoint(filepath=model_name,
+                                        monitor="loss", verbose=1, save_best_only=True)
+        early_stop = EarlyStopping(monitor="loss")
+
+        makepath('./model')
+        self._save_label(model_name)
 
         if not self.pretrained:
-            model = self.new_model()
             dataset = self._data_generator()
-            model_name = f"./model/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.h5"
+            model = self.new_model()
 
-            checkpoint = ModelCheckpoint(filepath=model_name,
-                                         monitor="val_loss", verbose=1, save_best_only=True)
-            early_stop = EarlyStopping()
 
-            makepath('./model')
+        else :
+            dataset = self._data_generator(224)
+            model = self.pretrained_model()
 
-            result = model.fit_generator(
-                dataset,
-                epochs=epoch,
-                callbacks=[checkpoint, early_stop]
-            )
-            # model.save(model_name)
-            self._save_label(model_name)
+        result = model.fit_generator(
+            dataset,
+            epochs=epoch,
+            callbacks=[checkpoint, early_stop]
+        )
+        # model.save(model_name)
+
+
+
 
 
 if __name__ == '__main__':

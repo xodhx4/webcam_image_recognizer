@@ -2,23 +2,25 @@
 """
 import cv2
 
-cap = cv2.VideoCapture(0)
 
-while(True):
-    # Capture frame-by-frame
-    ret, frame = cap.read()
+def main():
+    cap = cv2.VideoCapture(0)
 
-    # Our operations on the frame come here
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    while(True):
+        # Capture frame-by-frame
+        ret, frame = cap.read()
 
-    # Display the resulting frame
-    cv2.imshow('frame',frame)
-    cv2.imshow('gray',gray)
-    if cv2.waitKey(20) & 0xFF == ord('q'):
-        break
+        # Our operations on the frame come here
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-# When everything done, release the capture
-cap.release()
-cv2.destroyAllWindows()
+        # Display the resulting frame
+        cv2.imshow('frame', frame)
+        cv2.imshow('gray', gray)
+        if cv2.waitKey(20) & 0xFF == ord('q'):
+            break
+
+    # When everything done, release the capture
+    cap.release()
+    cv2.destroyAllWindows()
 
 # https://www.codingforentrepreneurs.com/blog/opencv-python-web-camera-quick-test/

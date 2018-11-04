@@ -57,7 +57,8 @@ class Inferencer(object):
             ret, frame = cap.read()
             if ret==True:
                 # Change frame size to put model
-                resized_frame = np.expand_dims(cv2.resize(frame, (64, 64)), axis=0)
+                size = model.layers[0].input_shape[1:3]
+                resized_frame = np.expand_dims(cv2.resize(frame, size), axis=0)
 
                 # Predict frame
                 result = model.predict(resized_frame)[0]

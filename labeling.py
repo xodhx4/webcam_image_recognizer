@@ -5,7 +5,7 @@ Then you could save frame as image at './train/{label}'.
 And this dataset is used to train your own model
 
 USAGE:
-    python labeling.py labeling --label LABEL --videoname VIDEO_PATH
+    python labeling.py labeling --label LABEL --videoname VIDEO_NAME
 """
 import cv2
 import os
