@@ -14,7 +14,7 @@ class Recognizer(cmd.Cmd):
     2 : record
     3 : labeling
     4 : train
-    5 : inferace
+    5 : inference
     6 : analysis
     
     You could read help by type `help <topic>`    
